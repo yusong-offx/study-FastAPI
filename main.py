@@ -1,13 +1,14 @@
-# https://youtu.be/7t2alSnE2-I?t=2762
-
 from fastapi import FastAPI
+from database import engine
+from router.sell import models, schema
 
+models.Base.metadata.create_all(engine)
 app = FastAPI()
 
 @app.get('/')
 def index():
-	return {'First' : 'index'}
+	return {'detail' : 'init project'}
 
-@app.get('/{id}')
-def id(id: str):
-	return {'id' : id}
+@app.post('/')
+def create(request: schema.test):
+	return request
