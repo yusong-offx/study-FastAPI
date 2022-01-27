@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from db.database import get_db
 from db import models
-from fastapi import FastAPI, APIRouter, Response, status, Query, Depends
+from fastapi import FastAPI, APIRouter, Response, status, Query, Depends, HTTPException
 from pydantic import BaseModel
 from typing import Optional
 
@@ -31,7 +31,6 @@ def a(db: Session = Depends(get_db)):
 @router.get('/all/{id}')
 def a(id: int, db: Session = Depends(get_db)):
     r = db.query(models.Parents).filter(models.Parents.id == id).first()
-    print(r.children)
     return r
 
 
@@ -51,5 +50,8 @@ def a(db: Session = Depends(get_db)):
 
 @router.get('/children/all/{id}')
 def a(id: int, db: Session = Depends(get_db)):
+    if id > 10:
+        raise HTTPException(
+            status_code=418, detail=f'No {id} in Database')
     r = db.query(models.Children).filter(models.Children.id == id).first()
     return r

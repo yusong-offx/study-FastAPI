@@ -1,8 +1,9 @@
 from pydantic import BaseModel
+from fastapi import Body
 
 
 class ParentsBase(BaseModel):
-    name: str
+    name: str = Body(None, max_length=10)
 
 
 class CD(BaseModel):

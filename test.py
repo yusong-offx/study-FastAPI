@@ -1,10 +1,12 @@
-import time
+import psycopg2
 
+with open("dblogin.txt") as f:
+    conn = psycopg2.connect(f.read())
 
-tm = time.localtime()
-print("year:", tm.tm_year)
-print("month:", tm.tm_mon)
-print("day:", tm.tm_mday)
-print("hour:", tm.tm_hour)
-print("minute:", tm.tm_min)
-print("second:", tm.tm_sec)
+cur = conn.cursor()
+
+cur.execute("SELECT * FROM movies")
+data = cur.fetchall()
+print(*data, sep='\n')
+cur.close()
+conn.close()
