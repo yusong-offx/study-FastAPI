@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+sqlalchemy
+
+python-jose[cryptography]
+passlib[bcrypt]
+
+python-jose
+### openssl rand -hex 32
+
+python-multipart
+aiofiles
